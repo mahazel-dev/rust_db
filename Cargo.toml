@@ -1,0 +1,10 @@
+[package]
+name = "database_command"
+version = "0.0.0"
+authors = ["mahazel <adam.kozlowski94@gmail.com>"]
+description = "A `cargo generate` template for quick-starting a procedural macro crate"
+keywords = ["template", "proc_macro", "procmacro"]
+edition = "2018"
+
+[dependencies]
+text_io = "0.1.8"
