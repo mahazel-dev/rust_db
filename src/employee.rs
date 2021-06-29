@@ -1,7 +1,7 @@
 #[derive(Debug)]
 pub struct Employee<'a> {
-    Name: &'a str,
-    Department: &'a str,
+    pub Name: &'a str,
+    pub Department: &'a str,
 }
 
 impl <'a>Employee<'a>   {

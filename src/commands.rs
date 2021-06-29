@@ -43,11 +43,19 @@ pub fn printList(map: &HashMap<u32, Employee>, command: &String) {
  */
 
 pub fn AddEmployee(map: &mut HashMap<u32, Employee>, command_buffor: &mut Vec<String>)    {
-    let mut department = command_buffor.pop();
-    let mut dir = command_buffor.pop();
-    let mut name    =   command_buffor.get(..);   // Option<String>;
+    let department = command_buffor.pop();
+    let dir = command_buffor.pop();
+    let name_op = command_buffor.get(..);
 
-    let mut _name   = String::new();
+    let mut name = String::new();
+
+    for cell in name_op.unwrap() {
+        name = name + &cell[..] + " ";
+    }
+    name.pop();
+
+    println!("Name {:?}", name);
+    //println!("Buffer in function {:?}", command_buffor);
     /*
     match department    {
         Some(dept)  =>  {
@@ -67,12 +75,13 @@ pub fn AddEmployee(map: &mut HashMap<u32, Employee>, command_buffor: &mut Vec<St
     };
      */
 
+    //if department == None || dir == None || name == None {
 
 
+    name.pop();
+}
 
-
-    let new_person = Employee::new(&_name[..], &department.unwrap());
-    println!("New Employee: {:?}", new_person);
+    //else {println!("Duper duper")};
     /*
     let person  =   Employee    {
         Name:   TupleData.1,
@@ -81,7 +90,7 @@ pub fn AddEmployee(map: &mut HashMap<u32, Employee>, command_buffor: &mut Vec<St
     let index = find_maxID(&map) + 1;
     map.insert(index, person);
      */
-}
+
 
 pub fn extract_command(input_string: &mut Vec<String>)   -> Command  {
     //let extracted_command= StringToVec(input_string)
