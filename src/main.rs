@@ -3,8 +3,15 @@ use std::collections::HashMap;
 
 fn main()   {
     let mut employee_list   =   employee_list::create_HashMap();
-    let command_buffor = input_text();
-    printList(&employee_list, &command_buffor);
+    let mut command_buffor = input_command();
+
+    println!("{:?}", &command_buffor);
+    println!("Command: {:?}", extract_command(&mut command_buffor));
+    println!("{:?}", &command_buffor);
+    AddEmployee(&mut employee_list, &mut command_buffor)
+    //println!("{:?}", AddEmployee(&mut employee_list, &mut command_buffor));
+
+    //printList(&employee_list, &command_buffor);
     //println!("{:?}", extract_command(&commands));
 
 }
