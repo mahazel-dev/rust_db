@@ -4,7 +4,7 @@ use crate::commands::*;
 
 
 
-pub fn create_HashMap() ->  HashMap<u32, Employee<'static>>  {
+pub fn create_HashMap() ->  HashMap<u32, Employee>  {
     let mut list: HashMap<u32, Employee> = HashMap::new();
 
     list.insert(000, Employee::new("Adam Kozlowski", "Sales"));

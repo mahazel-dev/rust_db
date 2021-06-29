@@ -1,12 +1,12 @@
 #[derive(Debug)]
-pub struct Employee<'a> {
-    pub Name: &'a str,
-    pub Department: &'a str,
+pub struct Employee {
+    pub Name: String,
+    pub Department: String,
 }
 
-impl <'a>Employee<'a>   {
-    pub fn new(name: &'a str, department: &'a str)    -> Self {
-        Self    {   Name: name, Department: department,    }
+impl Employee   {
+    pub fn new(name: &str, department: &str)    -> Self {
+        Self    {   Name: String::from(name), Department: String::from(department),    }
     }
 }
 

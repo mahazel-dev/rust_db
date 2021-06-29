@@ -42,19 +42,24 @@ pub fn printList(map: &HashMap<u32, Employee>, command: &String) {
 }
  */
 
-pub fn AddEmployee(map: &mut HashMap<u32, Employee>, command_buffor: &mut Vec<String>)    {
-    let department = command_buffor.pop();
-    let dir = command_buffor.pop();
-    let name_op = command_buffor.get(..);
+pub fn AddEmployee(map: &mut HashMap<u32, Employee>, command: Vec<String>)    {
+    let mut buffor = command.clone();
+
+    let department = buffor.pop();
+    let dir = buffor.pop();
+    let name_op = buffor.get(..);
 
     let mut name = String::new();
-
-    for cell in name_op.unwrap() {
-        name = name + &cell[..] + " ";
+    match name_op   {
+        Some(value) => {
+            for cell in value {
+                name = name + &cell[..] + " ";}
+            name.pop();
+            map.insert(find_maxID(map), Employee::new(&name, &department.unwrap()));
+        }
+        None    => return,
     }
-    name.pop();
 
-    println!("Name {:?}", name);
     //println!("Buffer in function {:?}", command_buffor);
     /*
     match department    {
@@ -75,10 +80,6 @@ pub fn AddEmployee(map: &mut HashMap<u32, Employee>, command_buffor: &mut Vec<St
     };
      */
 
-    //if department == None || dir == None || name == None {
-
-
-    name.pop();
 }
 
     //else {println!("Duper duper")};
@@ -92,9 +93,9 @@ pub fn AddEmployee(map: &mut HashMap<u32, Employee>, command_buffor: &mut Vec<St
      */
 
 
-pub fn extract_command(input_string: &mut Vec<String>)   -> Command  {
+pub fn extract_command(input_vecstring: &mut Vec<String>) -> Command  {
     //let extracted_command= StringToVec(input_string)
-    let extracted_command = input_string.get(0);
+    let extracted_command = input_vecstring.get(0);
     let mut output: Command;
     match extracted_command   {
         Some(command)   => {    match &command.to_lowercase()[..]   {
@@ -107,7 +108,7 @@ pub fn extract_command(input_string: &mut Vec<String>)   -> Command  {
         },
         None    => output = Command::Pass,
     }
-    if output   !=  Command::Pass   {  input_string.remove(0);  }
+    if output   !=  Command::Pass   {  input_vecstring.remove(0);  }
     output
 }
 
