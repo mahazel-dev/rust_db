@@ -1,6 +1,8 @@
 use text_io::read;
 use crate::employee::*;
 use std::collections::HashMap;
+use std::num::ParseIntError;
+
 
 #[derive(Debug, PartialEq)]
 pub enum Command    {
@@ -30,27 +32,62 @@ pub fn printList(map: &HashMap<u32, Employee>, command: Ve) {
 }
  */
 
+fn StrToU32Handle(input: String) -> Result<u32, ParseIntError>   {
+    let ID = input.to_string().parse::<u32>();
+    ID
+}
+
 
 // *****************
 pub fn EditEmployee(map: &mut HashMap<u32, Employee>, command: Vec<String>) {
     let mut buffor = command.clone();
 
-    let mut ID: u32;
+
+    let ID: Result<u32, ParseIntError>;
     match buffor.pop() {
-        None    =>  {   println!("What ID: ?");
-            ID = read!();}
-        Some(id)    => {    println!("Some({})", id);
-            ID =   id.to_string().parse::<u32>().unwrap();},
+        None            =>  {   println!("What ID?");
+            ID = StrToU32Handle(read!()); }
+        Some(id)    =>  {  ID = StrToU32Handle(id);  }
     }
-    println!("Your ID: {}", ID);
+
+    match &ID    {
+        Ok(_t)   => println!("Przeszlo"),
+        Err(_e)  => {    println!("Wrong ID");
+            return
+        },
+    }
+
+    let ID = ID.unwrap();
+
+    let positionID = map.get(&ID);
+    match positionID {
+        Some(n) => {
+            println!("ID: {}, {:?}", &ID, n);
+
+            println!("What part?");
+            let column: String = read!();
+
+            println!("To what?");
+            let new_column: String = read!("{}\n");
+
+            match &*column.to_lowercase() {
+                "name" => { map.get_mut(&ID).unwrap().Name = new_column;  },
+                "department" => {   map.get_mut(&ID).unwrap().Department = new_column; },
+                _ => println!("Didn't find column")
+            };
+        },
+        None => println!("ID not found :("),
+    }
 }
+
 
 // *****************
 pub fn AddEmployee(map: &mut HashMap<u32, Employee>, command: Vec<String>)    {
     let mut buffor = command.clone();
-
     let department = buffor.pop();
+
     buffor.pop();
+
     let name_op = buffor.get(..);
 
     let mut name = String::new();
