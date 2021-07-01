@@ -32,10 +32,7 @@ pub fn printList(map: &HashMap<u32, Employee>, command: Ve) {
 }
  */
 
-fn StrToU32Handle(input: String) -> Result<u32, ParseIntError>   {
-    let ID = input.to_string().parse::<u32>();
-    ID
-}
+
 
 
 // *****************
@@ -67,19 +64,19 @@ pub fn EditEmployee(map: &mut HashMap<u32, Employee>, command: Vec<String>) {
             println!("What part?");
             let column: String = read!();
 
-            println!("To what?");
-            let new_column: String = read!("{}\n");
-
             match &*column.to_lowercase() {
-                "name" => { map.get_mut(&ID).unwrap().Name = new_column;  },
-                "department" => {   map.get_mut(&ID).unwrap().Department = new_column; },
+                "name" => { println!("To what?");
+                    let new_column: String = read!("{}\n");
+                    map.get_mut(&ID).unwrap().Name = new_column;  },
+                "department" => { println!("To what?");
+                    let new_column: String = read!("{}\n");
+                    map.get_mut(&ID).unwrap().Department = new_column; },
                 _ => println!("Didn't find column")
             };
         },
         None => println!("ID not found :("),
     }
 }
-
 
 // *****************
 pub fn AddEmployee(map: &mut HashMap<u32, Employee>, command: Vec<String>)    {
@@ -135,3 +132,9 @@ fn find_maxID   (map: &HashMap<u32, Employee>)   -> u32  {
     *map.keys().max().unwrap()
 }
 
+
+// *****************
+fn StrToU32Handle(input: String) -> Result<u32, ParseIntError>   {
+    let ID = input.to_string().parse::<u32>();
+    ID
+}
