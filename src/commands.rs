@@ -56,7 +56,7 @@ pub fn FilterEmployeeList(map: &HashMap<u32, Employee>, command: Vec<String>)   
         },
         None => return,
     };
-    println!("Filtered HashMap: {:?}", bufforMap);
+    println!("Filtered HashMap: {:#?}", bufforMap);
     println!("-----------\nEND OF PRINT");
 }
 
