@@ -1,4 +1,4 @@
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Employee {
     pub Name: String,
     pub Department: String,

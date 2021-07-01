@@ -32,19 +32,43 @@ pub fn printList(map: &HashMap<u32, Employee>, command: Ve) {
 }
  */
 
+fn do_clone<K: Clone, V: Clone>(data: &HashMap<K,V>) -> HashMap<K, V> {
+    data.clone()
+}
 
+pub fn FilterEmployeeList(map: &HashMap<u32, Employee>, command: Vec<String>)    {
+    println!("-----------\nBEGINNING OF PRINT");
+    println!(" digit string: {} to lower case: {}", "1", "1".to_lowercase() );
+    // ADD MAPPING!!!!!!!!!!
+    let mut buffor = command.clone();
+    let copy_map = do_clone(map);
 
+    let mut bufforMap: HashMap<u32, Employee>   =   HashMap::new();
+
+    match buffor.pop()  {
+        Some(parameter) => {
+            match StrToU32Handle(&parameter) {
+                Ok(digit)   => {    bufforMap.insert(digit, copy_map.get(&digit).unwrap().clone());},
+                Err(string) =>  {   match &parameter[..] {
+                        "company" | "all" => bufforMap = copy_map,
+                        _ => return, };
+                },  };
+        },
+        None => return,
+    };
+    println!("Filtered HashMap: {:?}", bufforMap);
+    println!("-----------\nEND OF PRINT");
+}
 
 // *****************
 pub fn EditEmployee(map: &mut HashMap<u32, Employee>, command: Vec<String>) {
     let mut buffor = command.clone();
 
-
     let ID: Result<u32, ParseIntError>;
     match buffor.pop() {
         None            =>  {   println!("What ID?");
-            ID = StrToU32Handle(read!()); }
-        Some(id)    =>  {  ID = StrToU32Handle(id);  }
+            ID = StrToU32Handle(&read!()); }
+        Some(id)    =>  {  ID = StrToU32Handle(&id);  }
     }
 
     match &ID    {
@@ -134,7 +158,7 @@ fn find_maxID   (map: &HashMap<u32, Employee>)   -> u32  {
 
 
 // *****************
-fn StrToU32Handle(input: String) -> Result<u32, ParseIntError>   {
+fn StrToU32Handle(input: &String) -> Result<u32, ParseIntError>   {
     let ID = input.to_string().parse::<u32>();
     ID
 }

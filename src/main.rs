@@ -7,11 +7,11 @@ fn main() {
         match extract_command(&mut command_buffor) {
             Command::Add    =>  AddEmployee(&mut employee_list, command_buffor),
             Command::Edit   =>  EditEmployee(&mut employee_list, command_buffor),
-            Command::Print  =>  (),
+            Command::Print  =>  FilterEmployeeList(&employee_list, command_buffor),
             Command::Exit   =>  break 'command_loop,
             _               =>  println!("{:?}", Command::Pass),
         };
-        println!("----\nYour list: {:#?}", &employee_list);
+        //println!("----\nYour list: {:#?}", &employee_list);
     }
 }
 
