@@ -15,31 +15,10 @@ pub enum Command    {
 }
 
 
-/*
-pub fn printList(map: &HashMap<u32, Employee>, command: Ve) {
-    let StringVec = StringToVec(command);
-    match StringVec.get(1)  {
-        Some(feature)    => {
-            match *feature {
-                "company" | "all" => println!("{:#?}", map),
-                _ => for (key, value) in map.into_iter() {
-                    if feature == map.Department { println!("ID: {}, {:#?}", key, value); }
-                }
-            }
-        }
-        None    => println!("Precise what to print <print department/all/company>")
-    }
-}
- */
 
-fn do_clone<K: Clone, V: Clone>(data: &HashMap<K,V>) -> HashMap<K, V> {
-    data.clone()
-}
 
 pub fn FilterEmployeeList(map: &HashMap<u32, Employee>, command: Vec<String>)    {
-    println!("-----------\nBEGINNING OF PRINT");
-    println!(" digit string: {} to lower case: {}", "1", "1".to_lowercase() );
-    // ADD MAPPING!!!!!!!!!!
+
     let mut buffor = command.clone();
     let copy_map = do_clone(map);
 
@@ -48,16 +27,21 @@ pub fn FilterEmployeeList(map: &HashMap<u32, Employee>, command: Vec<String>)   
     match buffor.pop()  {
         Some(parameter) => {
             match StrToU32Handle(&parameter) {
-                Ok(digit)   => {    bufforMap.insert(digit, copy_map.get(&digit).unwrap().clone());},
+                Ok(digit)   => {    if copy_map.contains_key(&digit) == true {
+                    bufforMap.insert(digit, copy_map.get(&digit).unwrap().clone());}
+                else { println!("Sorry didn't find ID");
+                return;}
+                    },
                 Err(string) =>  {   match &parameter[..] {
                         "company" | "all" => bufforMap = copy_map,
+                    // ADD MAPPING!!!!!!!!!!
                         _ => return, };
                 },  };
         },
         None => return,
     };
-    println!("Filtered HashMap: {:#?}", bufforMap);
-    println!("-----------\nEND OF PRINT");
+    println!("-----------\nFiltered HashMap: {:#?}", bufforMap);
+
 }
 
 // *****************
@@ -156,9 +140,13 @@ fn find_maxID   (map: &HashMap<u32, Employee>)   -> u32  {
     *map.keys().max().unwrap()
 }
 
-
 // *****************
 fn StrToU32Handle(input: &String) -> Result<u32, ParseIntError>   {
     let ID = input.to_string().parse::<u32>();
     ID
+}
+
+// *****************
+fn do_clone<K: Clone, V: Clone>(data: &HashMap<K,V>) -> HashMap<K, V> {
+    data.clone()
 }
